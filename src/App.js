@@ -9,14 +9,30 @@ import { Link } from 'react-router-dom'
 
 class BooksApp extends React.Component {
 state = {
-    books:[]
+    books:[],
+    search:[]
 }
 
 getAllBooks(){
     BooksAPI.getAll().then((books)=>{
-        console.log("books", books)
         this.setState({books: books});
     })
+}
+
+searchBooks=(query)=>{
+    const books = this.state.books ? this.state.books : [];
+    BooksAPI.search(query).then((search)=>{
+        let newSearch = search ? search.map(item=>{
+            if (item && item.id && books) {
+                books.forEach(book=>{
+                    book.id === item.id ? item.shelf = book.shelf : null;
+                });
+            }
+            return item;
+        }) : [];
+        this.setState({search: newSearch});
+        this.getAllBooks();
+    }) 
 }
 
 componentDidMount(){
@@ -52,7 +68,11 @@ render() {
             <Route path="/search" render={({history})=>(
 
                 <div className="search-books">
-                    <SearchBooks/>
+                    <SearchBooks 
+                        search={state.search} 
+                        onUpdateBook={this.updateBook}
+                        onSearchBook={this.searchBooks}
+                    />
                 </div>
             
             )} />  
