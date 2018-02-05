@@ -31,7 +31,15 @@ class BookShelf extends Component {
 														</div>
 												</div>
 												<div className="book-title">{item.title}</div>
-												<div className="book-authors">{item.authors}</div>
+												<div className="book-authors">
+													{item.authors.map((author, i)=>(
+														<span 
+															key={i} 
+															style={{display:'block'}}>
+															{author}														
+														</span>
+													))}
+												</div>
 											</div>
 										</li>
 									))
