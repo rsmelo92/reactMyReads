@@ -13,12 +13,24 @@ state = {
     * pages, as well as provide a good URL they can bookmark and share.
     */
     showSearchPage: false,
+    changed:false,
     books:[]
 }
 
-componentDidMount(){
+getAllBooks(){
     BooksAPI.getAll().then((books)=>{
         this.setState({books: books});
+    })
+}
+
+componentDidMount(){
+    this.getAllBooks();
+}
+
+updateBook=(book, shelf)=>{
+    console.log("updateBook!");
+    BooksAPI.update(book, shelf).then((books)=>{
+        this.getAllBooks();
     })
 }
 
@@ -31,6 +43,7 @@ render() {
                 <div className="list-books">
                     <ListBooks 
                         books={state.books} 
+                        onUpdateBook={this.updateBook}
                         type="Currently Reading"
                     />
                     <div className="open-search">

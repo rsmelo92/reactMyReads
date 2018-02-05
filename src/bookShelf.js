@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 
 class BookShelf extends Component {
+	handleChange = (e)=>{
+		const value 	= e.target.value,
+			  bookId 	= e.target.attributes['data-book-id'].value;
+		if (this.props.onUpdateBook) { this.props.onUpdateBook({id:bookId}, value) }
+	}
 
 	render(){
 		const props = this.props,
 			  title = props.type,
 			  books = props.books;
-
-			  console.log("books",books);	
-
 		return(
 			<div className="bookshelf">
 				<h2 className="bookshelf-title">{title}</h2>
@@ -20,8 +22,9 @@ class BookShelf extends Component {
 											<div className="book">
 												<div className="book-top">
 													<div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${item.imageLinks.thumbnail})` }}></div>
+														
 														<div className="book-shelf-changer">
-															<select>
+															<select value="none" onChange={this.handleChange} data-book-id={item.id}>
 																<option value="none" disabled>Move to...</option>
 																<option value="currentlyReading">Currently Reading</option>
 																<option value="wantToRead">Want to Read</option>
@@ -29,7 +32,9 @@ class BookShelf extends Component {
 																<option value="none">None</option>
 															</select>
 														</div>
+												
 												</div>
+												
 												<div className="book-title">{item.title}</div>
 												<div className="book-authors">
 													{item.authors.map((author, i)=>(
