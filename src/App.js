@@ -25,7 +25,7 @@ searchBooks=(query)=>{
         let newSearch = search ? search.map(item=>{
             if (item && item.id && books) {
                 books.forEach(book=>{
-                    book.id === item.id ? item.shelf = book.shelf : null;
+                    if(book.id === item.id){ item.shelf = book.shelf }
                 });
             }
             return item;
