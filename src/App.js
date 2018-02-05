@@ -14,6 +14,7 @@ state = {
 
 getAllBooks(){
     BooksAPI.getAll().then((books)=>{
+        console.log("books", books)
         this.setState({books: books});
     })
 }
