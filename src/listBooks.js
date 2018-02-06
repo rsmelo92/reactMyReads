@@ -3,10 +3,10 @@ import BookShelf from './bookShelf'
 
 class ListBooks extends Component{
 	render(){
-		const books = this.props.books;
-		let currentlyReading = books.length>0 ? books.filter(item=>{ return item.shelf === 'currentlyReading'; 	}) : [],
-			wantToRead 		 = books.length>0 ? books.filter(item=>{ return item.shelf === 'wantToRead'; 		}) : [],
-			read 			 = books.length>0 ? books.filter(item=>{ return item.shelf === 'read'; 				}) : [];
+		const books 			= this.props.books,
+			  currentlyReading 	= books.filter(item=>{ return item.shelf === 'currentlyReading'; 	}),
+			  wantToRead 		= books.filter(item=>{ return item.shelf === 'wantToRead'; 			}),
+			  read 			 	= books.filter(item=>{ return item.shelf === 'read'; 				});
 
 		return(
 			<div className="list-books">

@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import BookShelf from './bookShelf'
+import PropTypes from 'prop-types'
 
 class SearchBooks extends Component{
+	static: propTypes = {
+		search: PropTypes.array.isRequired,
+		onSearchBook: PropTypes.func.isRequired
+	}
+
 	handleChange = (e)=>{
 		const value = e.target.value;
 		if (this.props.onSearchBook) { this.props.onSearchBook(value) }
 	}
 
 	render(){
-		let search = (this.props.search) ? this.props.search && this.props.search.error ? [] : this.props.search : [];
+		let search = this.props.search;
 		return(
 			<div>
 				<div className="search-books-bar">

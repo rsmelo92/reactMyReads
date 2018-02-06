@@ -21,18 +21,28 @@ getAllBooks(){
 
 searchBooks=(query)=>{
     const books = this.state.books ? this.state.books : [];
-    BooksAPI.search(query).then((search)=>{
-        let newSearch = search ? search.map(item=>{
-            if (item && item.id && books) {
-                books.forEach(book=>{
-                    if(book.id === item.id){ item.shelf = book.shelf }
-                });
-            }
-            return item;
-        }) : [];
-        this.setState({search: newSearch});
-        this.getAllBooks();
-    }) 
+    // Verificação da query
+    if (query && typeof query === 'string' && query !== '') {
+        // Chamada da API
+        BooksAPI.search(query).then((search)=>{
+            // Colocando shelf no item da search
+            const newSearch = search ? search.map(item=>{
+                if (item && item.id && books) {
+                    books.find(book=>{
+                        if(book.id === item.id){
+                            item.shelf = book.shelf; 
+                        }
+                        return book.id === item.id;
+                    });
+                }
+                return item;
+            }) : [];
+            // Setando o state do search com os resultados
+            this.setState({search: newSearch});
+        }).catch(()=>{
+            alert('Erro na consulta, tente novamente mais tarde');
+        });
+    }
 }
 
 componentDidMount(){

@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class BookShelf extends Component {
+	static: propTypes = {
+		books: PropTypes.array.isRequired,
+		onUpdateBook: PropTypes.func.isRequired
+	}
+
 	handleChange = (e)=>{
 		const value 	= e.target.value,
 			  bookId 	= e.target.attributes['data-book-id'].value;
